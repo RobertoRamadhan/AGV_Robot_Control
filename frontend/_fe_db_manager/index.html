@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f8fc">
+  <title>DB Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=202610121340">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="DB Manager home">
+        <span class="brand-mark" aria-hidden="true">D</span>
+        <span>DB<span class="brand-light">Manager</span></span>
+      </a>
+      <div class="topbar-meta">
+        <span class="server-label">MICROSOFT SQL SERVER</span>
+        <span class="connection-state" id="connection-state" data-state="checking"><span></span><b id="connection-label">MEMERIKSA</b></span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="sidebar" aria-label="Database dan tabel">
+        <div class="sidebar-section">
+          <p class="eyebrow">DATABASE</p>
+          <div id="database-name" class="database-name">WH2</div>
+          <p class="server-address" id="server-address">Menyambungkan...</p>
+        </div>
+
+        <div class="sidebar-heading">
+          <div>
+            <p class="eyebrow">DATA OBJECTS</p>
+            <h2>Tabel</h2>
+          </div>
+          <span class="table-count" id="table-count">0</span>
+        </div>
+        <label class="search-box" for="table-filter">
+          <span aria-hidden="true">⌕</span>
+          <input id="table-filter" type="search" placeholder="Cari tabel" autocomplete="off">
+        </label>
+        <nav id="table-list" class="table-list" aria-label="Daftar tabel"></nav>
+        <p class="sidebar-note">CRUD terpusat untuk modul backend yang menggunakan database terpilih.</p>
+      </aside>
+
+      <section class="main-content" aria-label="Isi tabel">
+        <div class="content-toolbar">
+          <div class="table-heading">
+            <p class="eyebrow" id="table-breadcrumb">DATABASE / PILIH TABEL</p>
+            <h1 id="selected-table-title">Pilih tabel</h1>
+          </div>
+          <div class="toolbar-actions">
+            <button id="refresh-button" class="secondary-button refresh-button" type="button" title="Muat ulang tabel">Refresh</button>
+            <button id="add-button" class="primary-button" type="button" disabled>
+              <span aria-hidden="true">+</span> Tambah data
+            </button>
+          </div>
+        </div>
+
+        <div id="notice" class="notice" role="status" hidden></div>
+        <div class="grid-meta">
+          <span id="row-summary">Pilih tabel untuk melihat data.</span>
+          <span id="row-key-note">Pilih tabel untuk melihat kolom dan mengelola data.</span>
+        </div>
+        <div class="grid-frame" id="grid-frame">
+          <table class="data-grid" id="data-grid">
+            <thead id="grid-head"></thead>
+            <tbody id="grid-body"></tbody>
+          </table>
+          <div class="empty-state" id="empty-state">
+            <div class="overview-heading">
+              <span class="empty-mark" aria-hidden="true">▤</span>
+              <div>
+                <p class="eyebrow">TABEL DALAM MODUL</p>
+                <h2 id="overview-title">Semua data</h2>
+                <p id="overview-copy">Pilih tabel untuk melihat dan mengelola datanya.</p>
+              </div>
+            </div>
+            <div class="table-overview" id="table-overview"></div>
+          </div>
+          <div class="empty-state empty-rows" id="empty-rows" hidden>
+            <span class="empty-mark" aria-hidden="true">▤</span>
+            <h2>Tabel ini belum memiliki data</h2>
+            <p>Gunakan Tambah data untuk membuat baris pertama.</p>
+          </div>
+        </div>
+        <div class="pagination" id="pagination" hidden>
+          <span id="page-label">Halaman 1 dari 1</span>
+          <div>
+            <button class="page-button" id="previous-page" type="button" aria-label="Halaman sebelumnya">Previous</button>
+            <button class="page-button" id="next-page" type="button" aria-label="Halaman berikutnya">Next</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer"><span>DB MANAGER</span><span id="footer-database">SQL SERVER / CRUD CONTROLLER</span></footer>
+  </div>
+
+  <dialog id="record-dialog" class="record-dialog">
+    <form id="record-form" method="dialog">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow" id="dialog-eyebrow">DATABASE RECORD</p>
+          <h2 id="dialog-title">Tambah data</h2>
+        </div>
+        <button class="icon-button close-button" id="close-dialog" type="button" aria-label="Tutup">×</button>
+      </div>
+      <div class="field-list" id="field-list"></div>
+      <p class="dialog-error" id="dialog-error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button class="secondary-button" id="cancel-dialog" type="button">Batal</button>
+        <button class="primary-button" id="save-record" type="submit">Simpan</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

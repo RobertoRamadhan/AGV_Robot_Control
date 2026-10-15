@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f8fc">
+  <title>Waypoint Interlock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../_fe_db_manager/styles.css?v=202610121340">
+  <link rel="stylesheet" href="styles.css?v=202610121340">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Waypoint Interlock">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span>Waypoint<span class="brand-light">Interlock</span></span>
+      </a>
+      <div class="topbar-meta">
+        <span class="server-label">WH2 / AREA STRICT</span>
+        <span class="connection-state" id="connection-state" data-state="checking"><span></span><b id="connection-label">CHECKING</b></span>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="content-toolbar">
+        <div class="table-heading">
+          <p class="eyebrow">DATABASE / DBO</p>
+          <h1>Waypoint Interlock</h1>
+          <p class="subtitle">Manage checkpoint and strict area priority rules. Active rules check robot occupancy every five seconds while this page is open.</p>
+        </div>
+        <div class="toolbar-actions">
+          <a class="secondary-button" href="Page_Activate/">Manage activation</a>
+          <button id="refresh-button" class="secondary-button refresh-button" type="button" title="Refresh rules">Refresh</button>
+        </div>
+      </section>
+
+      <div id="notice" class="notice" role="status" hidden></div>
+      <div class="grid-meta">
+        <span id="row-summary">Loading interlock rules...</span>
+      </div>
+      <div class="area-filters" aria-label="Area filters">
+        <label class="area-filter" for="checkpoint-filter">
+          <span class="filter-label">CHECKPOINT AREA</span>
+          <span class="search-box"><span aria-hidden="true">⌕</span><input id="checkpoint-filter" type="search" placeholder="Search checkpoint area" autocomplete="off"></span>
+        </label>
+        <label class="area-filter" for="strict-filter">
+          <span class="filter-label">STRICT AREA</span>
+          <span class="search-box"><span aria-hidden="true">⌕</span><input id="strict-filter" type="search" placeholder="Search strict area" autocomplete="off"></span>
+        </label>
+        <p class="filter-hint" id="filter-hint">Use one area search at a time.</p>
+      </div>
+      <div class="grid-frame" id="grid-frame" data-loading="true">
+        <table class="data-grid" id="data-grid">
+          <thead id="grid-head"></thead>
+          <tbody id="grid-body"></tbody>
+          <tfoot id="grid-foot">
+            <tr><td colspan="1"><button id="add-button" class="table-add-button" type="button" disabled><span aria-hidden="true">+</span> Add new rule</button></td></tr>
+          </tfoot>
+        </table>
+        <div class="empty-rows" id="empty-state" hidden>
+          <span class="empty-mark" aria-hidden="true">▤</span>
+          <h2 id="empty-title">No interlock rules yet</h2>
+          <p id="empty-copy">Add a rule to configure area priority.</p>
+        </div>
+      </div>
+      <div class="pagination" id="pagination" hidden>
+        <span id="page-label">Page 1 of 1</span>
+        <div><button class="page-button" id="previous-page" type="button">Previous</button><button class="page-button" id="next-page" type="button">Next</button></div>
+      </div>
+      <footer class="page-footer"><span>WAYPOINT INTERLOCK</span><span id="footer-database">WH2 / DBO.TB_08_AREA_STRICT</span></footer>
+    </main>
+  </div>
+
+  <dialog id="record-dialog" class="record-dialog">
+    <form id="record-form" method="dialog">
+      <div class="dialog-header">
+        <div><p class="eyebrow">AREA STRICT RULE</p><h2 id="dialog-title">Add rule</h2></div>
+        <button class="icon-button close-button" id="close-dialog" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="field-list" id="field-list"></div>
+      <p class="dialog-error" id="dialog-error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button class="secondary-button" id="cancel-dialog" type="button">Cancel</button>
+        <button class="primary-button" id="save-record" type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
